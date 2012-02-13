@@ -61,7 +61,7 @@ Array.prototype.average = function() {
 }
 
 commify = function (num) {
-    if (!num) return;
+    if (!num) return 0;
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
@@ -86,6 +86,7 @@ var loadChurchStats = function (data, pop) {
 }
 var loadData = function(data) {
     $("#churches").html(commify(data.churches));
+    console.log(data.missionaries);
     $("#missionaries").html(commify(data.missionaries));
     var pop = data.wikipedia && data.wikipedia.Population ? data.wikipedia.Population : data.Population;
     if (pop.replace) pop = parseInt(pop.replace(/,/g,""));
@@ -117,7 +118,6 @@ var onclicker = function(e) {
     var pref = this.firstChild.textContent;
     var data = missionglanceData.prefectures[pref];
     if (!data) return; // Can't happen
-    console.log(map.zoom());
     if (map.zoom() < 5) { return }
     if (map.zoom() < 6) {
         // Go to region
