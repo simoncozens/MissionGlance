@@ -1,0 +1,60 @@
+<html>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>MissionGlance Japan</title>
+        <link rel="stylesheet" media="all" href="missionglance.css">
+        <script type='text/javascript' src='polymaps.min.js'></script>
+        <script type='text/javascript' src='jquery.min.js'></script>
+        <script type='text/javascript' src='missionglance.json'></script>
+        <script>
+        </script>
+    </head>
+    <body onload="loadData(missionglanceData.japan)">
+       <h1> MissionGlance Japan </h1>
+
+        <h2 id="name"> Japan </h2>
+        <h3 id="nameJapanese"> </h3>
+
+        <div id="map" style="float:left"></div>
+        <script type='text/javascript' src='missionglance.map.js'></script>
+    <table>
+    <tr> <td>
+    Population
+    <div class="sunkenPanel">
+        <span id="pop"></span><br>
+        <span id="poprank" class="secondary"></span>
+    </div>
+
+        </td>
+        <td>
+        Area
+        <div class="sunkenPanel">
+        <span id="area"></span> <span class="secondary">km<sup>2</sup></span>
+        <span id="poprank" class="secondary"></span>
+        </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Churches
+        <div class="sunkenPanel">
+            <span id="churches"></span><br>
+            <span id="churchperpop" class="secondary"></span>
+        </div>
+        </td>
+        <td>Missionaries
+        <div class="sunkenPanel">
+            <span id="missionaries"></span><br>
+            <span id="missionaryperpop" class="secondary"></span>
+        </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan=2>
+            Church statistics<br>
+            <div class="sunkenPanel" id="churchstats" style="width:93%">
+            </div>
+        </td>
+    </tr>
+    </table>
+    </body>
+</html>

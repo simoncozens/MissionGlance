@@ -1,0 +1,108 @@
+@import url(http://fonts.googleapis.com/css?family=Asap:400,700);
+
+body {
+background: #efdd69; /* Old browsers */
+background: -moz-linear-gradient(top,  #efdd69 0%, #fefcea 100%) no-repeat; /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#efdd69), color-stop(100%,#fefcea)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #efdd69 0%,#fefcea 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #efdd69 0%,#fefcea 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #efdd69 0%,#fefcea 100%); /* IE10+ */
+background: linear-gradient(top,  #efdd69 0%,#fefcea 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efdd69', endColorstr='#fefcea',GradientType=0 ); /* IE6-9 */
+	font-family:  Asap;
+}
+table {
+	margin: 0px auto;
+}
+td {
+	text-align: center;
+}
+div#map {
+	height:300px; width:400px;
+    margin: 20px;
+	border: 1px solid black;
+}
+#map { background: #E6E6E6; }
+  
+.layer path {
+  stroke: #fff;
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}   
+td {
+	padding: 10px;
+}
+h1 {
+	text-align:center; color: #ebebeb;
+	font: bold 76px Asap;
+	text-shadow: #6b6b6b 4px 4px 5px;
+}
+
+h2,h3 {
+	text-align: center; color: #333;}
+.sunkenPanel{
+	
+    position: relative;
+    padding: 5px 10px 5px 10px;
+    background-color: rgba(0,0,0,0.05);
+    -webkit-box-shadow: inset 0px 3px 3px rgba(0,0,0,0.3);
+    -webkit-border-radius: 5px;
+    -moz-box-shadow: inset 0px 3px 3px rgba(0,0,0,0.3);
+    -moz-border-radius: 5px;
+    width: 150px;
+    margin-left: 10px;
+	font-weight: bold;
+	font-size: 15pt;
+}
+.secondary {
+	font-weight: normal; font-size: 10pt;
+}
+
+svg {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.compass .back {
+  fill: #eee;
+  fill-opacity: .8;
+}
+
+.compass .fore {
+  stroke: #999;
+  stroke-width: 1.5px;
+}
+
+.compass rect.back.fore {
+  fill: #999;
+  fill-opacity: .3;
+  stroke: #eee;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+}
+
+.compass .direction {
+  fill: none;
+}
+
+.compass .chevron {
+  fill: none;
+  stroke: #999;
+  stroke-width: 5px;
+}
+
+.compass .zoom .chevron {
+  stroke-width: 4px;
+}
+
+.compass .active .chevron, .compass .chevron.active {
+  stroke: #fff;
+}
+
+.compass.active .active .direction {
+  fill: #999;
+}
+.Blues .q5-9{fill:rgb(66,146,198)}
+.Blues .selected{fill:rgb(120,255,120)}
