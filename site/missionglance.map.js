@@ -120,43 +120,49 @@ var onclicker = function(e) {
     if (!data) return; // Can't happen
     if (map.zoom() < 5) { return }
     if (map.zoom() < 6) {
-        // Go to region
-        zoomType = "region";
         var region = data.wikipedia.Region;
-        $("#name").text(region);
-        $("#nameJapanese").text("");
-        var data = missionglanceData.regions[region];
-        loadData(data)
-        if (oldSelected != undefined && oldSelected != data.prefectures) clearOldSelection();
-        oldSelected = {};
-        var centroidsLat = [];
-        var centroidsLon = [];
-        for (var i = 0; i < data.prefectures.length; i++) {
-            var feat =  (prefFeatures[data.prefectures[i]]);
-            var c = getCentroid(feat);
-            centroidsLat.push(c.lat);
-            centroidsLon.push(c.lon);
-        }
-        map.center({lat: centroidsLat.average(), lon: centroidsLon.average()});
-        //map.zoom(6);
-        geoJson.reload();
-        for (var i = 0; i < data.prefectures.length; i++) {
-            var feat =  (prefFeatures[data.prefectures[i]]);
-            feat.element.setAttribute("class","selected");
-            oldSelected[data.prefectures[i]] = 1;
-        }
+        goToRegion(region);
     } else {
-        // Go to pref
-        zoomType = "prefecture";
-        $("#name").text(pref);
-        loadData(data);
-        map.center(getCentroid(prefFeatures[pref]));
-        //map.zoom(6);
-        clearOldSelection();
-        this.setAttribute("class", "selected");
-        oldSelected = {}; oldSelected[pref] = 1;
+        goToPref( pref, data );
     }
     geoJson.reload();
+}
+
+function goToPref (pref, data) {
+    zoomType = "prefecture";
+    $("#name").text(pref);
+    loadData(data);
+    map.center(getCentroid(prefFeatures[pref]));
+    //map.zoom(6);
+    clearOldSelection();
+    this.setAttribute("class", "selected");
+    oldSelected = {}; oldSelected[pref] = 1;
+}
+
+function goToRegion(region) {
+    zoomType = "region";
+    $("#name").text(region);
+    $("#nameJapanese").text("");
+    var data = missionglanceData.regions[region];
+    loadData(data);
+    if (oldSelected != undefined && oldSelected != data.prefectures) clearOldSelection();
+    oldSelected = {};
+    var centroidsLat = [];
+    var centroidsLon = [];
+    for (var i = 0; i < data.prefectures.length; i++) {
+        var feat =  (prefFeatures[data.prefectures[i]]);
+        var c = getCentroid(feat);
+        centroidsLat.push(c.lat);
+        centroidsLon.push(c.lon);
+    }
+    map.center({lat: centroidsLat.average(), lon: centroidsLon.average()});
+    //map.zoom(6);
+    geoJson.reload();
+    for (var i = 0; i < data.prefectures.length; i++) {
+        var feat =  (prefFeatures[data.prefectures[i]]);
+        feat.element.setAttribute("class","selected");
+        oldSelected[data.prefectures[i]] = 1;
+    }
 }
 
 function load(e) {
@@ -168,4 +174,29 @@ function load(e) {
       feature.element.onclick = onclicker;
       prefFeatures[feature.data.properties.name] = feature;
   }
+}
+
+Object.prototype.keys = function() {
+    var rv = []
+    for(var p in this){
+        if(this.hasOwnProperty(p)){ rv.push(p) }
+    }
+    return rv;
+}
+
+function today() {
+    var now = new Date();
+    var onejan = new Date(now.getFullYear(),0,1);
+    var doy = Math.ceil((now - onejan) / 86400000);   
+    var day = Math.floor(doy / 3.25892857142857);
+    if (day < 9) { 
+        var region = (missionglanceData.regions.keys().sort())[day]
+        goToRegion(region);
+    } else {
+        day -= 9;
+        var pref = (missionglanceData.prefectures.keys().sort())[day]
+        var data = missionglanceData.prefectures[pref];
+        goToPref(pref, data);
+    }
+    map.zoom(6);
 }
