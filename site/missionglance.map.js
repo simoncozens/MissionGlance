@@ -117,7 +117,7 @@ var onclicker = function(e) {
     var pref = this.firstChild.textContent;
     if (map.zoom() < 5) { return }
     if (map.zoom() < 6) {
-        var region = data.wikipedia.Region;
+        var region = missionglanceData.prefectures[pref].wikipedia.Region;
         goToRegion(region);
     } else {
         goToPref(pref);
