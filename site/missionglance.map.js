@@ -164,6 +164,7 @@ function goToRegion(region) {
     }
 }
 
+var _once = 0;
 function load(e) {
   for (var i = 0; i < e.features.length; i++) {
     var feature = e.features[i];
@@ -173,6 +174,7 @@ function load(e) {
       feature.element.onclick = onclicker;
       prefFeatures[feature.data.properties.name] = feature;
   }
+  if (_once == 0 ) today(); _once = 1;
 }
 
 
