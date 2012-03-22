@@ -86,7 +86,6 @@ var loadChurchStats = function (data, pop) {
 }
 var loadData = function(data) {
     $("#churches").html(commify(data.churches));
-    console.log(data.missionaries);
     $("#missionaries").html(commify(data.missionaries));
     var pop = data.wikipedia && data.wikipedia.Population ? data.wikipedia.Population : data.Population;
     if (pop.replace) pop = parseInt(pop.replace(/,/g,""));
@@ -116,26 +115,26 @@ var clearOldSelection = function() {
 
 var onclicker = function(e) {
     var pref = this.firstChild.textContent;
-    var data = missionglanceData.prefectures[pref];
-    if (!data) return; // Can't happen
     if (map.zoom() < 5) { return }
     if (map.zoom() < 6) {
         var region = data.wikipedia.Region;
         goToRegion(region);
     } else {
-        goToPref( pref, data );
+        goToPref(pref);
     }
     geoJson.reload();
 }
 
-function goToPref (pref, data) {
+function goToPref (pref) {
+    var data = missionglanceData.prefectures[pref];
+    var el = prefFeatures[pref].element;
     zoomType = "prefecture";
     $("#name").text(pref);
     loadData(data);
     map.center(getCentroid(prefFeatures[pref]));
     //map.zoom(6);
     clearOldSelection();
-    this.setAttribute("class", "selected");
+    el.setAttribute("class", "selected");
     oldSelected = {}; oldSelected[pref] = 1;
 }
 
@@ -176,27 +175,25 @@ function load(e) {
   }
 }
 
-Object.prototype.keys = function() {
-    var rv = []
-    for(var p in this){
-        if(this.hasOwnProperty(p)){ rv.push(p) }
-    }
-    return rv;
-}
 
 function today() {
+    var _keys =function (o) {
+        var rv = [];
+        for (var p in o) { if (o.hasOwnProperty(p)) rv.push(p) };
+        return rv;
+    }
     var now = new Date();
     var onejan = new Date(now.getFullYear(),0,1);
     var doy = Math.ceil((now - onejan) / 86400000);   
-    var day = Math.floor(doy / 3.25892857142857);
+    var day = Math.floor(doy / 3.25892857142857)% (47 + 9);
     if (day < 9) { 
-        var region = (missionglanceData.regions.keys().sort())[day]
+        var region = (_keys(missionglanceData.regions).sort())[day]
         goToRegion(region);
     } else {
         day -= 9;
-        var pref = (missionglanceData.prefectures.keys().sort())[day]
-        var data = missionglanceData.prefectures[pref];
-        goToPref(pref, data);
+        var pref = (_keys(missionglanceData.prefectures).sort())[day]
+        goToPref(pref);
     }
     map.zoom(6);
+    return;
 }
